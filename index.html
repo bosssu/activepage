@@ -10,10 +10,56 @@
 
 	<body>
 		<label>测试网站</label>
-		<script src="js/mui.js"></script>
+		<script src="js/Bmob-2.5.2.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			Bmob.initialize("abc2a2e48ffd9aa0", "222333");
+			Bmob.debug(true);
+			
+			function Login(){
+				let username = document.getElementById("username").value
+				let passward = document.getElementById("password").value
+				Bmob.User.login(username,passward).then(res => {
+				   alert("success")
+				 }).catch(err => {
+				  console.log(err)
+				});
+			}
+			
+			function Reginster(){
+				let params = {
+				    username: document.getElementById("username").value,
+				    password: document.getElementById("password").value
+				}
+				Bmob.User.register(params).then(res => {
+				  alert("success")
+				}).catch(err => {
+				 console.log(err)
+				});
+			}
+			
+			function GetActiveCode(){
+				let params =　{
+				  funcName: 'GetMD5',
+				  data: {
+				    usercode : document.getElementById("usercode").value
+				  }
+				}
+				Bmob.functions(params.funcName,params.data).then(function (response) {
+				    console.log(response.result);
+				})
+				.catch(function (error) {
+				    console.log(error);
+				});
+			}
+			
 		</script>
+		
+		<input type="text" id="username" placeholder="Enter Username" /><br>
+		<input type="password" id="password" placeholder="Enter Password" /><br>
+		<button id="loginButton" onclick="Login()">Login</button>
+		<button id="registerButton" onclick="Reginster()">Regester</button>
+		<input type="text" id="usercode" placeholder="Enter UserCode" /><br>
+		<button id="getActiveCode" onclick="GetActiveCode()">获取激活码</button>
 	</body>
 
 </html>
